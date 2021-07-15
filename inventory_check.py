@@ -15,8 +15,6 @@ HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
 # set to hold found items so they aren't opened repeatedly
 TOUCHED = set()
 
-URLS = set()
-
 parser = argparse.ArgumentParser()
 
 def get_products(soup):
@@ -40,8 +38,6 @@ def check_stock(products):
                     webbrowser.open_new_tab(prod_page)
 
 def search_page(url, headers):
-    global URLS
-    URLS |= {url}
     res = requests.get(url, headers=headers)
     assert res.ok, f"Got response {res.status_code} from server!"
     soup = BS(res.text, 'html.parser')    
@@ -57,23 +53,30 @@ def search_page(url, headers):
             res = requests.get(next_url, headers=headers)
             assert res.ok, f"Got response {res.status_code} from server!"
             soup = BS(res.text, 'html.parser')
+            products = get_products(soup)
             check_stock(products)
 
             
 def main(URL):
+    global TOUCHED
+    global HEADERS
     # main loop
     while True:
         search_page(URL, HEADERS)
-        URLS = set()
         if len(TOUCHED) == 0:
             print("No inventory found, trying again in a few seconds...")
-        sleep(randint(5,7))
+        else:
+            print("Found the following item(s) in stock:")
+            for item in TOUCHED:
+                print(f"\t{item}")
+
+        sleep(randint(5,10))
         
 
 if __name__ == "__main__":
     parser.add_argument("url", help="BestBuy URL to search", type=str)
     args = parser.parse_args()
     main(args.url)
-    
+
 
 
