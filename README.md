@@ -7,6 +7,7 @@ Inventory checker for BestBuy.
 2. Copy or clone the repository
 3. Open a terminal/cmd and navigate to the folder containing inventory_check.py
 4. run `python -m pip install -r requirements.txt`
-5. run `python inventory_check.py [URL]`
+5. run `python inventory_check.py "[URL]"`
 
 It is important that the provided URL contains all search criteria before running the process!
+It is also necessary for the provided URL to be in quotes.
