@@ -9,5 +9,6 @@ Inventory checker for BestBuy.
 4. run `python -m pip install -r requirements.txt`
 5. run `python inventory_check.py "[URL]"`
 
-It is important that the provided URL contains all search criteria before running the process!
+It is important that the provided URL contains all search criteria before running the process! This means that you should use the BestBuy website's filter features to select the categories, products, pricepoint, etc you want before copying the URL. The script is not designed to check individual item pages, just the lists of earch results.
+
 It is also necessary for the provided URL to be in quotes.
