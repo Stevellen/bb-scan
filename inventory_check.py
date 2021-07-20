@@ -34,8 +34,11 @@ def check_stock(products, in_store):
     global TOUCHED
     invalid_status = ['SOLD_OUT'] if in_store else ['SOLD_OUT', 'IN_STORE_ONLY']
     for item in products:
-        button = item.find('button', {"class": "add-to-cart-button"})
         item_id = item.attrs.get("data-sku-id")
+        button = item.find('button', {"class": "add-to-cart-button"})
+        if button is None:
+            button = item.find('a', {"class": "add-to-cart-button"})
+
         if button and (button.attrs.get('data-button-state') not in invalid_status):
             e = item.h4.a.attrs.get('href')
             if e and (item_id not in TOUCHED):
