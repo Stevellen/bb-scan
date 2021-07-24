@@ -14,6 +14,7 @@ from random import randint
 from datetime import datetime
 from twilio.rest import Client
 from urllib.parse import urljoin
+from urllib3.exceptions import TimeoutError
 from bs4 import BeautifulSoup as BS
 
 # DEFINING CONSTANTS
@@ -75,6 +76,8 @@ def search_page(url, headers, in_store):
             break
         if next_url := next_page.attrs.get('href'):
             soup = get_soup(next_url, headers)
+            if soup is None:
+                return
             products = get_products(soup)
             check_stock(products, in_store)
 
