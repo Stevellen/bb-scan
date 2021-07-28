@@ -31,7 +31,10 @@ parser = argparse.ArgumentParser()
 
 
 def get_soup(url, headers, timeout=10):
+    global HOMEPAGE
     try:
+        if not url.startswith(HOMEPAGE):
+            url = urljoin(HOMEPAGE, url)
         res = requests.get(url, headers=headers, timeout=timeout)
         assert res.ok, f"""Got response {res.status_code} from server!"""
         return BS(res.text, 'html.parser')
