@@ -12,7 +12,6 @@ import webbrowser
 from time import sleep
 from random import randint
 from datetime import datetime
-from twilio.rest import Client
 from urllib.parse import urljoin
 from urllib3.exceptions import TimeoutError
 from bs4 import BeautifulSoup as BS
